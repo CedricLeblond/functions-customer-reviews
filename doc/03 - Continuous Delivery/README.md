@@ -6,9 +6,9 @@
 <a name="Overview"></a>
 ## Overview ##
 
-Azure Resource Manager helps automate the provisionning of a lot of resources in Azure.
+Visual Studio Team Services (VSTS) helps helps automate ans secure the delivery pipeline of your applications. In lab 00, we used the intern deployment engine tool of Azure Kudu. It's a great tool to start with but comes with limitations. 
 
-In this lab, you will create the needed Azure Services for to run CustomerReviews web site and his automatic moderation with Cognitives Services. You will also add images to populate CustomerReviews site.
+In this lab, you will create a build pipeline to automatically build, test, package and deploy the Azure Function that check Image and moderate text for the CustomerReviews site. And use Application Insights to follow the health of solution and results of the reviews.
 
 <a name="Objectives"></a>
 ### Objectives ###
@@ -25,7 +25,7 @@ The following are required to complete this hands-on lab:
 
 - An active Microsoft Azure subscription. If you don't have one, [sign up for a free trial](http://aka.ms/WATK-FreeTrial).
 - An active GitHub account. If you don't have one, [sign up for free ](https://github.com/join). 
-- Execute succesfully the [lab 01](../00 - Provision resources and Reset) .
+- Execute succesfully the [lab 00](../00 - Provision resources and Reset) .
 
 ---
 
@@ -34,17 +34,17 @@ The following are required to complete this hands-on lab:
 
 This hands-on lab includes the following exercises:
 
-- [Exercise 1: Create an VSTS account and Project)](#Exercise1)
-- [Exercise 2: Fork GitHub repo](#Exercise2)
+- [Exercise 1: Create an VSTS account and Project](#Exercise1)
+- [Exercise 2: Fork GitHub repository and create a PAT](#Exercise2)
 - [Exercise 3: Create a pipeline to Continuous Delivery of an Azure Function](#Exercise3)
-- [Exercise 4: Create custom query and dashboard with Application Insights](#Exercise4)
+- [Exercise 4: Create custom query and use dashboard of Application Insights](#Exercise4)
 
 Estimated time to complete this lab: **30** minutes.
 
 <a name="Exercise1"></a>
-## Exercise 1: Create an Azure Cloud Shell (PowerShell) ##
+## Exercise 1: Create an VSTS account and Project ##
 
-The first step in .... In this exercise, you will create .....
+The first step in creting a continuous pipeline is to create an VSTS account and a Team Project. In this exercise, you will create the a new account and through Azure Portal.
 
 1. Open the [Azure Portal](https://portal.azure.com) in your browser. If asked to log in, do so using your Microsoft account.
 
@@ -72,7 +72,7 @@ TODO: sample: 1. Repeat Step 7 to add containers named "accepted" and "rejected"
 TODO: next exercises
 
 <a name="Exercise2"></a>
-## Exercise 2: Fork GitHub repo ##
+## Exercise 2: Fork GitHub repository and create a PAT ##
 
 Once you have created an Azure Cloud Shell, you can you can use Powershell, commands, and some other SDK or application installed on it. In this exercise, you will clone the git repo into a persistent volume _CloudDrive_ . This will allow you to get all the scripts necessary to create the Azure Services. 
 
@@ -109,11 +109,23 @@ Once you have created an Azure Cloud Shell, you can you can use Powershell, comm
 TODO: An Azure Function written in C# has been created, complete with a JSON project file containing information regarding project dependencies. The next step is to add an application setting that the Azure Function relies on.
 
 <a name="Exercise3"></a>
-## Exercise 3: Create a pipeline to Continuous Delivery of an Azure Function ##
+## Exercise 3: Create a pipeline to set Continuous Delivery of an Azure Function ##
 
 TODO: The Azure Function you created in [Exercise 2](#Exercise2) loads a subscription key for the Microsoft Cognitive Services Computer Vision API from application settings. This key is required in order for your code to call the Computer Vision API, and is transmitted in an HTTP header in each call. In this exercise, you will subscribe to the Computer Vision API, and then add an access key for the subscription to application settings.
 
 TO detail
+
+1. Create connection to Azure resource group
+2. Create Build 
+3. SetSettingsParameters
+4. Add zip 
+5. create release
+6. Automate creation or modification of Architecture [automate resource deployment of Azure Function](https://docs.microsoft.com/en-us/azure/azure-functions/functions-infrastructure-as-code)
+7. Deploy binaries site [deploy with zip push](https://docs.microsoft.com/en-us/azure/azure-functions/deployment-zip-push)
+
+
+
+------- original setup start -------
 
 You can also create a VSTS build definition to trigger from a code commit. To get it set up, follow these instructions: 
 
@@ -135,10 +147,12 @@ You can also create a VSTS build definition to trigger from a code commit. To ge
 
 ![](../../Media/Setup6.png)
 
-TODO:The work of writing and configuring the Azure Function is complete. Now comes the fun part: testing it out.
+------- original setup stop -------
+
+The work of writing, configuring and deploy the Azure Function is complete. Now comes the fun part: testing it out and monitor it.
 
 <a name="Exercise4"></a>
-## Exercise 4: Create custom query and dashboard with Application Insights ##
+## Exercise 4: Create custom query and use dashboard of Application Insights ##
 
 TODO: Your function is configured to listen for changes to the blob container named "uploaded" that you created in [Exercise 1](#Exercise1). Each time an image appears in the container, the function executes and passes the image to the Computer Vision API for analysis. To test the function, you simply upload images to the container. In this exercise, you will use the Azure Portal to upload images to the "uploaded" container and verify that copies of the images are placed in the "accepted" and "rejected" containers.
 
@@ -172,9 +186,11 @@ TODO:  The presence of seven images in the "accepted" container and one in the "
 
 In this hands-on lab you learned how to:
 
-- Create Azure Services with Azure Resource Manager templates
-- Execute PowerShell and Command srcipts in Azure Cloud Shell
-- Use Azure Web Apps and deployment engine (Kudu) to automate build and deploy of a Web site from a GitHub repo.
+- Create a VSTS account and a new Team project
+- Create a fork of a Github repository and a new PAT to access this repository
+- Create a new pipeline with a Build and a Release definitions to continuously deliver an Azure Function
+- Use Application Insights to follow solution health and follow your custom metrics.
 
-This is just one example of how you can leverage Azure Resource Managemeer and Azure Cloud Shell to automate infrastructure. Experiment with other Azure Resource Manager templates to learn more about Azure Services and provisionning to identify additional ways in which they can aid your research or business.
+This is just one example of how you can leverage VSTS and Application Insights. Experiment with other application deployment, you may want to add CustomerReviews site alonside the Azure Function. You could also leverage Azure Web apps capabilities like Slots to launch integrations tests before, or add an intermediate environment before production one like in this [blog post](https://blogs.msdn.microsoft.com/visualstudioalmrangers/2017/10/04/azure-function-ci-cd-devops-pipeline/).
+You could also explore [Azure DevOps Projects](https://go.microsoft.com/fwlink/?linkid=862126) to rapidly kickstart your project.
 
