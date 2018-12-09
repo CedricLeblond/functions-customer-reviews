@@ -83,12 +83,9 @@ namespace ContentModeratorFunction
         {
             TelemetryClient telemetry = new TelemetryClient();
             string key = TelemetryConfiguration.Active.InstrumentationKey = Environment.GetEnvironmentVariable("APPINSIGHTS_INSTRUMENTATIONKEY", EnvironmentVariableTarget.Process);
-
             try {
                 telemetry.Context.Operation.Name = "AnalyzeReview";
-
-                telemetry.TrackMetric("ModerationResult", GetModerationResult(passesImage, passesText));
-                
+                telemetry.TrackMetric("ModerationResult", GetModerationResult(passesImage, passesText));                
             }
             catch {
                 // avoid fail processing due to telemetry record saving issues
